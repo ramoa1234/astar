@@ -1,35 +1,27 @@
-var grid = []
 var columns = 5
 var rows = 5
-var container = []
-function setContainer() {
-    container = document.createElement("div")
-    container.classList.add("container")
-    document.body.append(container)
+var grid = []
+
+
+function Nodes(x, y, container) {
+    var h = (Math.sqrt(x - (columns - 1))*(x - (columns - 1))+(y - (rows - 1)+(y - (rows - 1))))
+    var g = 0 // start at 0,0 so g can be 0
+    var f = g + h
+    var status = 0
+    var div = document.createElement("div")
+    div.classList.add("node")
+    container.appendChild(div)
+    return div;
+}
+function setGrid() {
     for(let i = 0;i < columns;i++) {
         grid[i] = []
         for(let j = 0;j < rows;j++) {
-            grid[i][j] = 0
+            grid[i][j] = Nodes(i, j)
         }
     }
 }
-function drawGrid() {
-    for(let i = 0;i < columns;i++) {
-        for(let j = 0;j < rows;j++) {
-            var Node = document.createElement("div")
-            Node.classList.add("Node")
-            container.appendChild(Node)
-        }
-    }
-}
-
-function Node(i, j) {
-    var h = (Math.sqrt(i - (columns- 1))*(i - (columns - 1)+(j -(rows - 1)*(j- (rows - 1)))))
-    var g = 0
-    var f = g + h
-}
-
-function surronding(current) {
+function surrounding() {
     let temp = []
     for(let i = 0;i < 2;i++) {
         temp.push(current[i][+1])
@@ -41,18 +33,26 @@ function surronding(current) {
     }
     return temp
 }
-
 function aStar() {
-    var openSet = grid[0][0]
-    
-
+    var start = grid[0][0]
+    var openSet = []
+    openSet.push(start)
+    var closedSet = []
+    var result = grid[rows - 1][columns - 1]
     while(openSet != 0) {
-        var current = Math.min(Node(openSet))
-        if(current == end) {
-            break
+    //or current Node and current node does not equal goal
+    var current = openset[0][0]
+    if(current != 0) {
+
         } else {
-            var temp = surronding(current)
-            console.log(temp)
+            var surrounding = []
+            surrounding = surrounding(current)
         }
     }
+}
+function main() {
+    var container = document.createElement("div")
+    document.body.append(container)
+    setGrid()
+    aStar()
 }
