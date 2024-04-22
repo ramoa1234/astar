@@ -9,11 +9,12 @@ recursive calling
 condition
 
 bugfix
+need to correct infinite loop
+  need to double check that loop end conditions are correct
+  and that openset is properly having the values removed from
+    could be that the variables from between openSet and checkNeighbours is not correct
+    probably has to do with the way that openSet is returned in checkNeighbours
 
-than implement walls and test
-
-when calling a star the start is what is passed
-than current is defined and recusivly updated inside the fucntion
 
 
 PRIORITY QUEUE
