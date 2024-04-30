@@ -6,6 +6,7 @@ class square {
         this.y = y
         this.f = 0
         this.status = 0
+        this.div = null
     }
 }
 const rows = 50
@@ -22,30 +23,34 @@ for(let i = 0;i < rows;i++) {
         div.dataset.index
         const container = document.getElementById("container")
         container.appendChild(div)
+        temp.div = div
         divs[i][j] = div
         board[i][j] = temp
     }
 }
 const start =  board[1][1]
+start.div.classList = "start"
 const end = board[4][4]
+end.div.classList = "end"
+console.log(end.div)
 const openSet = []
+const closedSet = []
 function astar(start, end) {
     openSet.push(start)
-    //while(openSet.length > 0))
-    for(let i = 0;i < 5;i++) {
+    while(openSet.length > 0) {
         curr = lowestScore(openSet, start, end)
         if(curr == end) {
             console.log("end condition meet")
             return 0
         }
+        closedSet.push(curr)
         openSet.splice(curr)
-        
-        
+        openSet.push(findNeighbours(curr))
+        console.log(openSet)
+        console.log(closedSet)
+        updateBoard()
     }
 }
-
-
-
 function lowestScore(openSet,start, end) {
     var index = 1000
     
@@ -61,5 +66,41 @@ function lowestScore(openSet,start, end) {
         }
     }
     return lowest
+}
+function findNeighbours(curr) {
+    x = curr.x
+    y = curr.y
+    if (board[x + 1] != undefined && board[x + 1][y] != undefined && board[x + 1][y].status == 0 && !closedSet.includes(board[x + 1][y])) {
+        openSet.push(board[x + 1][y]);
+    }
+    if (board[x - 1] != undefined && board[x - 1][y] != undefined && board[x - 1][y].status == 0 && !closedSet.includes(board[x - 1][y])) {
+        openSet.push(board[x - 1][y]);
+    }
+    if (board[x][y + 1] != undefined && board[x][y + 1].status == 0 && !closedSet.includes(board[x][y + 1])) {
+        openSet.push(board[x][y + 1]);
+    }
+    if (board[x][y - 1] != undefined && board[x][y - 1].status == 0 && !closedSet.includes(board[x][y - 1])) {
+        openSet.push(board[x][y - 1]);
+    }
+    if (board[x + 1] != undefined && board[x + 1][y + 1] != undefined && board[x + 1][y + 1].status == 0 && !closedSet.includes(board[x + 1][y + 1])) {
+        openSet.push(board[x + 1][y + 1]);
+    }
+    if (board[x - 1] != undefined && board[x - 1][y - 1] != undefined && board[x - 1][y - 1].status == 0 && !closedSet.includes(board[x - 1][y - 1])) {
+        openSet.push(board[x - 1][y - 1]);
+    }
+    if (board[x + 1] != undefined && board[x + 1][y - 1] != undefined && board[x + 1][y - 1].status == 0 && !closedSet.includes(board[x + 1][y - 1])) {
+        openSet.push(board[x + 1][y - 1]);
+    }
+    if (board[x - 1] != undefined && board[x - 1][y + 1] != undefined && board[x - 1][y + 1].status == 0 && !closedSet.includes(board[x - 1][y + 1])) {
+        openSet.push(board[x - 1][y + 1]);
+    }
+    return openSet
+}
+
+
+function updateBoard() {
+
+
+
 }
 astar(start, end)
